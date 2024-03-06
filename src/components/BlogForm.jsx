@@ -1,66 +1,69 @@
-import { useState } from 'react'
-import { useDispatch } from 'react-redux'
-import { createBlog } from '../reducers/blogReducer'
+import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { createBlog } from '../reducers/blogReducer';
+import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
 
-const BlogForm = ({blogFormRef}) => {
-  const [title, setTitle] = useState('')
-  const [author, setAuthor] = useState('')
-  const [url, setUrl] = useState('')
-  const dispatch = useDispatch()
+const BlogForm = ({ blogFormRef }) => {
+  const [title, setTitle] = useState('');
+  const [author, setAuthor] = useState('');
+  const [url, setUrl] = useState('');
+  const dispatch = useDispatch();
 
   const addBlog = (event) => {
-    event.preventDefault()
+    event.preventDefault();
     dispatch(createBlog({
       title: title,
       author: author,
       url: url
-    }))
-    
-    setTitle('')
-    setAuthor('')
-    setUrl('')
-    blogFormRef.current.toggleVisibility()
+    }));
+
+    setTitle('');
+    setAuthor('');
+    setUrl('');
+    blogFormRef.current.toggleVisibility();
   }
 
   return (
     <div>
-
-      <h2>create new</h2>
+      <h2>Create New</h2>
       <form>
         <div>
-                    title:
-          <input
-            type="text"
+          <TextField
+            label="Title"
+            variant="outlined"
             value={title}
-            name="title"
-            placeholder='title'
-            onChange={event => setTitle(event.target.value)}
+            onChange={(event) => setTitle(event.target.value)}
           />
         </div>
         <div>
-                    author:
-          <input
-            type="text"
+          <TextField
+            label="Author"
+            variant="outlined"
             value={author}
-            name="author"
-            placeholder='author'         
-            onChange={event => setAuthor(event.target.value)}
+            onChange={(event) => setAuthor(event.target.value)}
           />
         </div>
         <div>
-                    url:
-          <input
-            type="text"
+          <TextField
+            label="URL"
+            variant="outlined"
             value={url}
-						name="url"
-						placeholder='url'
-            onChange={event => setUrl(event.target.value)}
+            onChange={(event) => setUrl(event.target.value)}
           />
         </div>
-        <button onClick={addBlog} id='create-button' type="submit">create</button>
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={addBlog}
+          id='create-button'
+          type="submit"
+        >
+          Create
+        </Button>
       </form>
     </div>
-  )
+  );
 }
 
-export default BlogForm
+export default BlogForm;

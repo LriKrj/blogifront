@@ -1,23 +1,36 @@
-import { useSelector } from "react-redux"
-import { Link } from "react-router-dom"
-import Table from 'react-bootstrap/Table'
-import Nav from 'react-bootstrap/Nav'
+import React, { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
+import { AgGridReact } from 'ag-grid-react';
+import 'ag-grid-community/styles/ag-grid.css';
+import 'ag-grid-community/styles/ag-theme-alpine.css';
 
 const Blogs = () => {
-  const blogs = useSelector(state => state.blog)
+  const blogs = useSelector((state) => state.blog);
+  const [rowData, setRowData] = useState([]);
+
+  useEffect(() => {
+    setRowData(blogs);
+  }, [blogs]);
+
+  const columnDefs = [
+    { headerName: 'Title', field: 'title', sortable: true, filter: true },
+  ];
+
+  const gridOptions = {
+    domLayout: 'autoHeight',
+    suppressPaginationPanel: true, // Hide pagination controls
+    paginationPageSize: blogs.length, // Show all rows without pagination
+  };
 
   return (
-    <Table striped bordered hover variant="primary">
-      <thead>
-        <tr>
-          <th>Blogs</th>
-        </tr>
-      </thead>
-      <tbody>
-        {blogs.map(blog => <tr key={blog.id}> <td><Nav.Link as={Link} to={`blogs/${blog.id}`}>{blog.title}</Nav.Link></td> </tr>)}
-      </tbody>
-    </Table>
-  )
-}
+    <div className="ag-theme-alpine" style={{ height: '500px', width: '100%' }}>
+      <AgGridReact
+        columnDefs={columnDefs}
+        rowData={rowData}
+        gridOptions={gridOptions}
+      />
+    </div>
+  );
+};
 
-export default Blogs
+export default Blogs;

@@ -1,20 +1,23 @@
-import Togglable from "./Togglable"
-import BlogForm from "./BlogForm"
-import Blogs from "./Blogs"
-import { useRef } from "react"
+import React, { useRef } from 'react';
+import { Box, Paper, Typography } from '@mui/material';
+import Togglable from './Togglable';
+import BlogForm from './BlogForm';
+import Blogs from './Blogs';
 
 const Home = () => {
-  const blogFormRef = useRef()
+  const blogFormRef = useRef();
 
   return (
-    <div>
-      <br></br>
-      <Togglable buttonLabel="create new blog" ref={blogFormRef}>
-        <BlogForm blogFormRef={blogFormRef} />
-      </Togglable>
+    <Box p={2}>
+      <Paper elevation={3} sx={{ padding: 2, marginBottom: 2 }}>
+        
+        <Togglable buttonLabel="Create New Blog" ref={blogFormRef}>
+          <BlogForm blogFormRef={blogFormRef} />
+        </Togglable>
+      </Paper>
       <Blogs />
-    </div>
-  )
-}
+    </Box>
+  );
+};
 
-export default Home
+export default Home;
